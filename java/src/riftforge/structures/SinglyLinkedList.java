@@ -16,5 +16,6 @@ public final class SinglyLinkedList<T> implements Iterable<T> {
         return false;
     }
     public int size() { return size; }
+    public boolean isEmpty() { return size == 0; }
     @Override public Iterator<T> iterator() { return new Iterator<>() { Node<T> current = head; public boolean hasNext() { return current != null; } public T next() { if (!hasNext()) throw new NoSuchElementException(); T value = current.data; current = current.next; return value; } }; }
 }

@@ -1,6 +1,8 @@
 package riftforge.ui;
 
 import riftforge.engine.GameEngine;
+import riftforge.model.Card;
+import riftforge.structures.Tree;
 
 /** Vista de consola: concentra el formato, sin contaminar el motor con IO. */
 public final class ConsoleRenderer {
@@ -12,10 +14,24 @@ public final class ConsoleRenderer {
     }
 
     public void showStatus(GameEngine engine) {
-        var active = engine.nextPlayer();
         System.out.printf("%nGrieta: %s (%s +%d ATK)%n", engine.activeRift().name(), engine.activeRift().bonusElement(), engine.activeRift().attackBonus());
-        System.out.printf("Turno de %s | vida: %d | maná: %d | deck: %d | cementerio: %d%n",
-                active.name(), active.life(), active.mana(), active.deck().size(), active.graveyard().size());
+        for (var player : engine.turnOrder()) {
+            System.out.printf("%s | vida: %d | maná: %d | deck: %d | cementerio: %d | blindaje: %d%n",
+                    player.name(), player.life(), player.mana(), player.deck().size(), player.graveyard().size(), player.shieldPool());
+            System.out.printf("  campo: %s%n", describeField(player));
+        }
+    }
+
+    private String describeField(riftforge.model.Player player) {
+        StringBuilder sb = new StringBuilder();
+        for (Card creature : player.field()) {
+            if (creature == null) continue;
+            sb.append(creature.name());
+            if (creature.damageTaken() > 0) sb.append(" [HP ").append(creature.remainingHealth()).append("/").append(creature.health()).append("]");
+            sb.append(", ");
+        }
+        String field = sb.length() == 0 ? "(vacío)" : sb.substring(0, sb.length() - 2);
+        return field + (player.fieldAttackBonus() > 0 ? " | mejoras: +" + player.fieldAttackBonus() + " ATQ" : "");
     }
 
     public void showHistory(GameEngine engine) {
@@ -31,7 +47,7 @@ public final class ConsoleRenderer {
     /** Recorre la lista simplemente enlazada desde la carta más recientemente registrada. */
     public void showCatalog(GameEngine engine) {
         System.out.println("\n--- Catálogo de cartas (lista simple) ---");
-        for (var card : engine.catalog()) System.out.println("> " + card);
+        for (var card : engine.catalog()) if (card != null) System.out.println("> " + card);
     }
 
     public void showFinalTurnOrder(GameEngine engine) {
@@ -47,5 +63,19 @@ public final class ConsoleRenderer {
         System.out.println("> " + result.action());
         System.out.printf("Vida: %s=%d | %s=%d%n", result.active().name(), result.active().life(), result.target().name(), result.target().life());
         System.out.printf("Maná: %s=%d | %s=%d%n", result.active().name(), result.active().mana(), result.target().name(), result.target().mana());
+    }
+
+    /** Muestra la línea de evolución (básica → mejorada → legendaria) con recorrido recursivo en preorden. */
+    public void showEvolutionTree(GameEngine engine) {
+        System.out.println("\n--- Línea de evolución de cartas (árbol, preorden recursivo) ---");
+        var tree = engine.evolutionTree();
+        if (tree.root() == null) { System.out.println("Aún no hay líneas de evolución registradas."); return; }
+        showNode(tree.root(), 0);
+        System.out.println("Altura del árbol: " + tree.height() + " | cartas en la línea: " + tree.size());
+    }
+
+    private void showNode(Tree.TreeNode<Card> node, int depth) {
+        System.out.println("  ".repeat(depth) + "> " + node.data());
+        for (Tree.TreeNode<Card> child : node.children().forward()) showNode(child, depth + 1);
     }
 }

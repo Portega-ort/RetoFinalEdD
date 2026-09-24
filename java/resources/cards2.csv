@@ -1,0 +1,41 @@
+card_uid,numero_coleccion,categoria,nombre,coste_flux,ataque_mod,defensa_durabilidad,descripcion_efecto,Elemento,Especial,Evoluciona_de
+CHR_03_HECHICERA,3,Personaje,La Hechicera de Impulsos,3,3,3,"Pulso Estático: Aturde a una unidad enemiga al entrar al campo impidiéndole atacar en su próximo turno.",ELECTRICO,si,
+CHR_09_CAMPEONA_ELFICA,9,Personaje,La Campeona Élfica,4,5,3,"Danza Cibernética: Realiza un segundo ataque de 2 ATQ si destruye a un objetivo en el primer golpe.",AGUA,no,CHR_03_HECHICERA
+CHR_06_REINA_RED,6,Personaje,La Reina de la Red,7,6,7,"Control Neuronal: Toma el control temporal de una criatura o utilidad enemiga de coste menor o igual a 4.",VACIO,no,CHR_09_CAMPEONA_ELFICA
+CHR_13_INGENIERO_TRASGO,13,Personaje,El Ingeniero Trasgo,2,2,3,"Mecanismo Caótico: Al entrar, roba 1 carta de Utilidad del mazo de forma aleatoria.",FUEGO,si,
+CHR_10_HERRERO_ENANO,10,Personaje,El Herrero Enano,4,3,6,"Forja de Aleación: Reduce en 1 el coste de todas las cartas de tipo Mejora en mano.",FUEGO,no,CHR_13_INGENIERO_TRASGO
+CHR_02_PALADIN,2,Personaje,El Paladín de Neón,5,5,6,"Escudo de Frecuencia: Absorbe los primeros 2 puntos de daño que reciba cualquier aliado adyacente.",ELECTRICO,no,CHR_10_HERRERO_ENANO
+CHR_01_INQUISIDOR,1,Personaje,El Inquisidor de Datos,4,4,4,"Purga Digital: Revela 1 carta oculta del rival y anula efectos pasivos en el objetivo durante 1 turno.",VACIO,no,
+CHR_04_VALQUIRIA,4,Personaje,La Valquiria de Plasma,6,7,5,"Carga Aérea: Puede atacar directamente a unidades en retaguardia ignorando guardias.",FUEGO,no,
+CHR_05_ARQUERA,5,Personaje,La Arquera de Neón,3,4,2,"Disparo Penetrante: Inflige daño a la defensa del objetivo y 1 punto directo a la reserva enemiga.",ELECTRICO,no,
+CHR_07_PICARO,7,Personaje,El Pícaro de las Sombras,2,3,2,"Sigilo Cuántico: No puede ser seleccionado por habilidades o ataques en el turno que es invocado.",SOMBRA,no,
+CHR_08_ALQUIMISTA,8,Personaje,El Alquimista de Flux,3,2,4,"Transmutación: Sacrifica 1 punto de DEF para otorgar +2 ATQ a una carta aliada.",AGUA,no,
+CHR_11_GUERRERO_ESCAMOSO,11,Personaje,El Guerrero Escamoso,5,6,5,"Piel Blindada: Reduce todo el daño recibido en 1 punto (mínimo 1).",DRAGON,no,
+CHR_12_CHAMANA_ORCA,12,Personaje,La Chamana Orca,5,4,5,"Tótem de Almas: Recupera 2 puntos de DEF a todos los aliados cuando una unidad enemiga es destruida.",AGUA,no,
+CHR_14_VAMPIRESA_DATOS,14,Personaje,La Vampiresa de Datos,6,6,4,"Drenaje de Código: Restaura su DEF por una cantidad igual al daño infligido a unidades enemigas.",SOMBRA,no,
+CRT_15_GARGOLA_CRISTAL,15,Criatura,La Gárgola de Cristal,3,2,6,"Reflexión Prisma: Desvía hechizos y habilidades ofensivas hacia un objetivo aleatorio en juego.",AGUA,si,
+CRT_16_GOLEM_DATOS,16,Criatura,El Golem de Datos,6,6,8,"Muralla de Memoria: Provoca al enemigo; todas las unidades enemigas deben atacarlo obligatoriamente.",ELECTRICO,no,
+CRT_17_CAN_SABUESO,17,Criatura,El Can Sabueso de Rastro,2,3,2,"Rastreador: Revela la mano completa del rival al entrar en combate por 1 turno.",FUEGO,si,
+CRT_29_LICANTROPO_FW,29,Criatura,El Licántropo de Cortafuegos,5,7,4,"Furia Incendiaria: Gana +1 ATQ por cada punto de daño que tenga su propia barra de DEF.",FUEGO,no,CRT_17_CAN_SABUESO
+CRT_18_DRAGON_VOLTAJE,18,Criatura,El Dragón de Voltaje,8,9,7,"Aliento Eléctrico: Al atacar, inflige 3 puntos de daño en área a todas las unidades de la retaguardia enemiga.",DRAGON,no,CRT_29_LICANTROPO_FW
+CRT_19_FENIX_PULSO,19,Criatura,El Fénix de Pulso,7,7,4,"Reinicio de Sistema: Al ser destruido, vuelve a la mano tras 2 turnos con coste reducido a 4.",FUEGO,no,
+UPG_25_BENDICION_NEON,25,Mejora,Bendición de Neón,2,0,2,"Otorga +2 DEF e inmunidad frente a efectos de aturdimiento y veneno digital.",ELECTRICO,no,
+UPG_26_SOBRECARGA_ALGORITMICA,26,Mejora,Sobrecarga Algorítmica,3,3,-1,"Modificador (+3 ATQ / -1 DEF). Permite a la unidad realizar un ataque perforante que traspasa escudos protectores.",ELECTRICO,no,
+UPG_27_ARMADURA_PLASMA,27,Mejora,Armadura de Plasma,3,0,4,"Otorga +4 DEF. Refleja 1 punto de daño físico directo a quien ataque a la unidad equipada.",ELECTRICO,no,
+UPG_28_CANALIZACION_RUNA,28,Mejora,Canalización Runa,2,0,0,"Reduce el coste de activación de la habilidad de la unidad a 0 durante 1 turno.",VACIO,no,
+UPG_30_VINCULO_RUNICO,30,Mejora,Vínculo Rúnico,3,2,2,"Modificador (+2 ATQ / +2 DEF). Enlaza dos unidades: si una recibe daño, ambas comparten la mitad del impacto.",VACIO,no,
+UPG_32_SOBRECARGA_ADRENALINA,32,Mejora,Sobrecarga de Adrenalina,4,4,0,"Modificador (+4 ATQ). La unidad obtiene iniciativa de ataque inmediato (Carga) durante el turno en que se aplica.",FUEGO,si,
+UPG_34_FILO_DATOS,34,Mejora,El Filo de Datos,3,3,0,"Modificador (+3 ATQ). Añade un 30% de probabilidad de golpe crítico (daño doble) en cada ofensiva.",VACIO,no,
+UPG_36_GUANTELETE_SOBRECARGA,36,Mejora,El Guantelete de Sobrecarga,4,3,1,"Modificador (+3 ATQ / +1 DEF). Desata una descarga en cadena de 2 de daño a una unidad enemiga contigua tras un ataque exitoso.",ELECTRICO,no,
+UPG_38_ESCUDO_CODIGO,38,Mejora,Escudo de Código,3,0,5,"Modificador (+5 DEF). Crea una barrera absoluta que niega el próximo ataque letal que fuera a destruir a la unidad.",ELECTRICO,no,
+UPG_40_NUCLEO_SUPREMO,40,Mejora,El Núcleo Supremo,6,5,5,"Ascensión Definitiva: Modificador (+5 ATQ / +5 DEF). La unidad equipada se vuelve invulnerable a hechizos enemigos y sus ataques son imparables.",VACIO,no,
+UTL_20_PORTAL_ENLACE,20,Utilidad,El Portal de Enlace,3,0,4,"Permite intercambiar la posición de dos unidades aliadas en cualquier fase de combate.",VACIO,no,
+UTL_21_ALTAR_CARGA,21,Utilidad,El Altar de Carga,2,0,5,"Genera +1 punto de Flux adicional en cada fase de mantenimiento.",FUEGO,no,
+UTL_22_REVELADOR_RUNAS,22,Utilidad,El Revelador de Runas,2,0,3,"Descifra y cancela la activación de 1 carta trampa o reacción del oponente.",VACIO,no,
+UTL_23_OJO_ESCANEO,23,Utilidad,El Ojo de Escaneo,1,0,3,"Muestra las siguientes 3 cartas en el tope del mazo y permite reorganizarlas al gusto.",ELECTRICO,no,
+UTL_24_CONDENSADOR_ENERGIA,24,Utilidad,El Condensador de Energía,4,0,6,"Almacena el Flux no utilizado al final del turno para usarlo en el siguiente (máximo 3).",ELECTRICO,no,
+UTL_31_RELOJ_ARENA,31,Utilidad,El Reloj de Arena de Datos,4,0,4,"Reduce en 1 el contador de enfriamiento de todas las habilidades activas de los personajes aliados.",VACIO,no,
+UTL_33_BRUJULA_FLUJO,33,Utilidad,La Brújula de Flujo,3,0,4,"Garantiza que el siguiente robo de carta sea exactamente del tipo elegido (Personaje, Mejora o Criatura).",VACIO,no,
+UTL_35_TOMO_ANALISIS,35,Utilidad,El Tomo de Análisis,3,0,3,"Otorga +1 ATQ pasivo a todas las unidades aliadas que ataquen a objetivos con efectos de estado.",AGUA,no,
+UTL_37_MAPA_ENLACES,37,Utilidad,El Mapa de Enlaces,4,0,5,"Conecta dos nodos del tablero permitiendo atacar directamente sin restricción de distancia.",VACIO,no,
+UTL_39_ORBE_TRANSMISION,39,Utilidad,El Orbe de Transmisión,5,0,5,"Transfiere inmediatamente los puntos de ATQ y DEF de una unidad destruida a otra aliada en mesa.",SOMBRA,no,
