@@ -217,8 +217,10 @@ flowchart TD
 ## 7. Complejidad relevante
 
 - O(1): `push`/`pop`, `enqueue`/`dequeue`, `addLast` de la lista doble, la
-  rotación circular (`current`), la inserción en la cola de prioridad y el
-  `put`/`get` del `HashMap`.
+  rotación circular (`current`) y el `put`/`get` del `HashMap`.
+- La cola de prioridad presupone pocas cartas por turno: encolar es O(1) en la
+  norma (y al anteponer/posponer una especial) y, en el peor caso, camina hasta
+  la frontera `firstNormal` al insertar una especial con normales ya cola.
 - O(n): buscar o eliminar una carta del catálogo, recorrer historial/catálogo,
   y los recorridos del árbol (`height`, `size`, `preorder`, `postorder`).
 - O(n²) peor caso, estable y sobre una copia: `OwnSorter.insertionSortByCost`
