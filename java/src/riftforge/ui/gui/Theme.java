@@ -26,6 +26,8 @@ public final class Theme {
     public static final Color LIFE_LOW = new Color(0xE53935);
     public static final Color MANA = new Color(0x2E8BD9);
     public static final Color BTN_SECONDARY = new Color(0x44516F);
+    /** Botón de menú activo: se usa para marcar la vista seleccionada. */
+    public static final Color BTN_SELECTED = new Color(0x54689C);
     public static final Color BTN_PLAY = new Color(0x2E7D32);
     public static final Color BTN_DISCARD = new Color(0x59647C);
 

@@ -9,7 +9,7 @@ import riftforge.ui.ConsoleRenderer;
 import java.util.List;
 import java.util.Scanner;
 
-/** Punto de entrada: abre la interfaz gráfica, o el duelo en consola con {@code --console}. */
+/** Punto de entrada: abre la pantalla de inicio, o el duelo en consola con {@code --console}. */
 public final class Main {
     public static void main(String[] args) throws Exception {
         if (args.length > 0 && args[0].equals("--console")) {
@@ -19,7 +19,7 @@ public final class Main {
             }
             return;
         }
-        javax.swing.SwingUtilities.invokeLater(riftforge.ui.gui.GameWindow::new);
+        javax.swing.SwingUtilities.invokeLater(riftforge.ui.gui.MenuWindow::new);
     }
 
     /** @return true si el usuario pidió comenzar una partida nueva. */

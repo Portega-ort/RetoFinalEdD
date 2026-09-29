@@ -13,6 +13,14 @@ import java.util.Map;
  * con {@link ImageIO} de forma síncrona para que la imagen esté completa en la
  * primera pintada y nunca dependa de un repintado posterior (p. ej. al
  * maximizar la ventana).
+ *
+ * <p><b>Caché compartida entre hilos:</b> los diccionarios se accoden de forma
+ * sincronizada porque la colección del catálogo puede calentar las 40
+ * ilustraciones en un hilo secundario mientras la ventana del duelo sigue
+ * pintando su mano. Sin esa garantía, un {@code get} concurrente con un
+ * {@code put} podría devolver un enlace corrupto. El coste es que decodificar
+ * bloquea a quien pinte durante el resto de la imagen, pero como el calentamiento
+ * se adelanta antes de abrir la ventana, ese solape es mínimo.
  */
 final class ImageStore {
     private static final Map<String, Image> SCALED = new HashMap<>();
@@ -23,7 +31,7 @@ final class ImageStore {
     }
 
     /** Devuelve la imagen de la carta escalada al tamaño pedido, o {@code null} si no existe. */
-    static Image forCard(String uid, int width, int height) {
+    static synchronized Image forCard(String uid, int width, int height) {
         String key = uid + "@" + width + "x" + height;
         Image cached = SCALED.get(key);
         if (cached != null) return cached;
@@ -33,7 +41,7 @@ final class ImageStore {
         return scaled;
     }
 
-    private static Image loadRaw(String uid) {
+    private static synchronized Image loadRaw(String uid) {
         Image raw = RAW.get(uid);
         if (raw != null) return raw;
         for (String extension : EXTENSIONS) {

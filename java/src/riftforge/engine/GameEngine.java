@@ -58,9 +58,22 @@ public final class GameEngine {
      * conserva intacta. Se usa en la vista de colección de la interfaz.
      */
     public java.util.List<Card> catalogSortedByCost() {
+        return riftforge.sort.OwnSorter.insertionSortByCost(catalogList());
+    }
+
+    /**
+     * Copia del catálogo agrupada por tipo de carta con el Insertion Sort
+     * propio, también estable; la lista simple original queda intacta.
+     */
+    public java.util.List<Card> catalogSortedByType() {
+        return riftforge.sort.OwnSorter.insertionSortByType(catalogList());
+    }
+
+    /** Copia del catálogo en su orden de alta, sin ningún nodo expuesto. */
+    private java.util.List<Card> catalogList() {
         java.util.List<Card> list = new java.util.ArrayList<>();
         for (Card card : catalog) if (card != null) list.add(card);
-        return riftforge.sort.OwnSorter.insertionSortByCost(list);
+        return list;
     }
 
     /** Registra una carta base como nivel 1 de su línea de evolución bajo la raíz sintética. */

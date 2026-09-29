@@ -14,6 +14,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.util.List;
 
 /**
  * Vista de una carta: la fotografía cubre toda la carta (recorte <em>cover</em>)
@@ -39,9 +40,30 @@ public final class CardView extends JComponent {
         this.prefW = width;
         this.prefH = height;
         this.element = Theme.element(card.element());
-        this.art = ImageStore.forCard(card.id(), Math.max(96, width * 2), Math.max(144, height * 2));
+        this.art = ImageStore.forCard(card.id(), artWidth(width), artHeight(height));
         setPreferredSize(new Dimension(width, height));
         setToolTipText(buildTooltip());
+    }
+
+    /**
+     * Precarga en segundo plano las ilustraciones de varias cartas al tamaño que
+     * usarán las vistas de este tamaño dado. Sirve para que un diálogo con 40
+     * cartas (la colección) no congele la interfaz mientras decodifica: la caché
+     * queda lista y pintar después es inmediato.
+     *
+     * <p>Usa la misma fórmula de tamaño que el constructor, así que lo que se
+     * calienta es exactamente lo que después se pinta.
+     */
+    public static void warmArt(List<Card> cards, int width, int height) {
+        for (Card card : cards) ImageStore.forCard(card.id(), artWidth(width), artHeight(height));
+    }
+
+    private static int artWidth(int width) {
+        return Math.max(96, width * 2);
+    }
+
+    private static int artHeight(int height) {
+        return Math.max(144, height * 2);
     }
 
     private String buildTooltip() {

@@ -3,16 +3,13 @@ package riftforge.ui.gui;
 import riftforge.app.Startup;
 import riftforge.data.CardDatabase;
 import riftforge.engine.GameEngine;
-import riftforge.model.BattleEvent;
 import riftforge.model.Card;
 import riftforge.model.Player;
-import riftforge.structures.Tree;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -31,8 +28,6 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -384,65 +379,15 @@ public final class GameWindow extends JFrame {
     }
 
     private void showCatalog() {
-        JTextArea area = new JTextArea();
-        area.setEditable(false);
-        area.setFont(Typeface.mono(Font.PLAIN, 13));
-        StringBuilder sb = new StringBuilder("CATÁLOGO ORDENADO POR COSTE (Insertion Sort propio)\n");
-        int lastCost = -1;
-        for (Card card : game.catalogSortedByCost()) {
-            if (card.manaCost() != lastCost) {
-                sb.append("\n== coste ").append(card.manaCost()).append(" ==\n");
-                lastCost = card.manaCost();
-            }
-            sb.append(String.format("%-4s %-30s %-10s %-9s ATK %2d DEF %2d%s%n",
-                    card.id(), tr(card.name(), 30), card.type(), card.element(), card.attack(), card.health(),
-                    card.special() ? " ★" : ""));
-        }
-        area.setText(sb.toString());
-        showDialog("Catálogo ordenado por coste", area, 580, 540);
+        Dialogs.showCatalog(this, game.catalogSortedByCost(), game.catalogSortedByType());
     }
 
     private void showHistory() {
-        JTextArea area = new JTextArea();
-        area.setEditable(false);
-        area.setFont(Typeface.mono(Font.PLAIN, 13));
-        StringBuilder sb = new StringBuilder("HISTORIAL DE LA PARTIDA (lista doble)\n");
-        for (BattleEvent event : game.history().forward()) {
-            sb.append("[").append(String.format("%3d", event.turn())).append("] ").append(event.description()).append("\n");
-        }
-        area.setText(sb.toString());
-        showDialog("Historial de eventos", area, 680, 540);
+        Dialogs.showHistory(this, game.history().forward());
     }
 
     private void showEvolutions() {
-        JTextArea area = new JTextArea();
-        area.setEditable(false);
-        area.setFont(Typeface.mono(Font.PLAIN, 13));
-        StringBuilder sb = new StringBuilder("ÁRBOL DE EVOLUCIONES\n");
-        Tree.TreeNode<Card> root = game.evolutionTree().root();
-        if (root != null) buildTree(sb, root, 0);
-        area.setText(sb.toString());
-        showDialog("Evoluciones (árbol)", area, 560, 540);
-    }
-
-    private void buildTree(StringBuilder sb, Tree.TreeNode<Card> node, int level) {
-        for (int i = 0; i < level; i++) sb.append("   ");
-        sb.append(node.data().name()).append(node.data().special() ? " ★" : "").append("\n");
-        for (Tree.TreeNode<Card> child : node.children().forward()) buildTree(sb, child, level + 1);
-    }
-
-    private void showDialog(String title, JTextArea area, int width, int height) {
-        JDialog dialog = new JDialog(this, title, true);
-        JScrollPane scroll = new JScrollPane(area);
-        scroll.setPreferredSize(new Dimension(width, height));
-        dialog.setContentPane(scroll);
-        dialog.pack();
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }
-
-    private static String tr(String text, int max) {
-        return text.length() <= max ? text : text.substring(0, max - 1) + "…";
+        Dialogs.showEvolutions(this, game.evolutionTree());
     }
 
     /** Fondo degradado para la cabecera. */
@@ -452,81 +397,6 @@ public final class GameWindow extends JFrame {
             Graphics2D g = (Graphics2D) graphics.create();
             g.setPaint(new GradientPaint(0, 0, Theme.BG_TOP, getWidth(), getHeight(), Theme.BG_BOTTOM));
             g.fillRect(0, 0, getWidth(), getHeight());
-            g.dispose();
-        }
-
-        @Override
-        public void update(Graphics g) {
-            paintComponent(g);
-        }
-    }
-
-    /**
-     * Fondo con imagen (tablero o mesa) a sangre completa; sin imagen usa el
-     * degradado por defecto. Se aplica una veladura oscura para que las cartas
-     * y el texto sigan leyéndose sobre la ilustración.
-     */
-    private static final class Backdrop extends JPanel {
-        private final Image image;
-        private final Color top;
-        private final Color bottom;
-        private final int overlay;
-
-        Backdrop(Image image, Color top, Color bottom, int overlay) {
-            this.image = image;
-            this.top = top;
-            this.bottom = bottom;
-            this.overlay = overlay;
-            setOpaque(false);
-        }
-
-        @Override
-        protected void paintComponent(Graphics graphics) {
-            Graphics2D g = (Graphics2D) graphics.create();
-            int width = getWidth();
-            int height = getHeight();
-            if (image != null && width > 0 && height > 0) {
-                int iw = image.getWidth(null);
-                int ih = image.getHeight(null);
-                if (iw > 0 && ih > 0) {
-                    double cover = Math.max((double) width / iw, (double) height / ih);
-                    int dw = (int) Math.ceil(iw * cover);
-                    int dh = (int) Math.ceil(ih * cover);
-                    g.drawImage(image, (width - dw) / 2, (height - dh) / 2, dw, dh, null);
-                }
-            } else {
-                g.setPaint(new GradientPaint(0, 0, top, 0, height, bottom));
-            }
-            g.setColor(new Color(0, 0, 0, overlay));
-            g.fillRect(0, 0, width, height);
-            g.dispose();
-        }
-
-        @Override
-        public void update(Graphics g) {
-            paintComponent(g);
-        }
-    }
-
-    /**
-     * Panel translúcido con las esquinas redondeadas para que el tablero o la
-     * mesa de fondo se vean alrededor de cada zona de juego.
-     */
-    private static final class GlassPanel extends JPanel {
-        private final Color fill;
-
-        GlassPanel(Color color, int alpha) {
-            this.fill = new Color(color.getRed(), color.getGreen(), color.getBlue(), alpha);
-            setOpaque(false);
-        }
-
-        @Override
-        protected void paintComponent(Graphics graphics) {
-            Graphics2D g = (Graphics2D) graphics.create();
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g.setColor(fill);
-            int arc = Math.min(22, Math.min(getWidth(), getHeight()) / 6);
-            g.fillRoundRect(0, 0, getWidth(), getHeight(), arc, arc);
             g.dispose();
         }
 

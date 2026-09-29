@@ -10,8 +10,9 @@ import java.util.Map;
 /**
  * Carga y cachea los fondos decorativos de la mesa:
  * {@code resources/backgrounds/board.}* (panel de juego),
- * {@code resources/backgrounds/table.}* (mesa de la mano) y
- * {@code resources/backgrounds/log.}* (bitácora). Se leen desde el classpath
+ * {@code resources/backgrounds/table.}* (mesa de la mano),
+ * {@code resources/backgrounds/log.}* (bitácora) y
+ * {@code resources/backgrounds/fondo_inicio.}* (pantalla de inicio). Se leen desde el classpath
  * (JAR/app) o desde {@code java/resources}; se decodifican con {@link ImageIO}
  * de forma síncrona y, si el archivo no existe, se devuelve {@code null} y la
  * interfaz cae al degradado por defecto.
@@ -20,6 +21,7 @@ final class BackgroundStore {
     private static final String BOARD = "backgrounds/board";
     private static final String TABLE = "backgrounds/table";
     private static final String LOG = "backgrounds/log";
+    private static final String INICIO = "backgrounds/fondo_inicio";
     private static final String[] EXTENSIONS = {".png", ".jpeg", ".jpg"};
     private static final Map<String, Image> CACHE = new HashMap<>();
 
@@ -36,6 +38,11 @@ final class BackgroundStore {
 
     static Image log() {
         return load(LOG);
+    }
+
+    /** Fondo de la pantalla de inicio; {@code null} si no está empaquetado. */
+    static Image inicio() {
+        return load(INICIO);
     }
 
     private static Image load(String base) {
