@@ -234,6 +234,13 @@ flowchart TD
 
 ### 8.1 Consola (`java -jar RiftForge.jar --console`)
 
+El JAR no está en el repositorio: es un artefacto de compilación que genera
+`build.sh` (macOS) o `build-windows.bat` (Windows). Pásalo una vez y luego:
+
+```bash
+java -jar RiftForge.jar --console
+```
+
 Cada turno muestra el estado (vida, maná, deck, cementerio, blindaje, campo con
 vidas restantes), la grieta activa y la carta a robar. Teclas:
 
@@ -333,6 +340,10 @@ Entregables:
   *Abrir*, o `xattr -dr com.apple.quarantine dist/RiftForge-1.0.dmg`.
 - `dist/RiftForge.app` — app portable sin instalar.
 - `RiftForge.jar` — `java -jar RiftForge.jar` (requiere Java).
+
+> `RiftForge.jar` y `runtime-image/` se generan al compilar y **no se versionan**:
+> son unos 100 MB por sistema y solo sirven en la plataforma para la que se
+> construyeron. Cada quien compila el suyo.
 
 ### Windows
 
