@@ -29,6 +29,19 @@ bin/
 ### Mac OS ###
 .DS_Store
 
+### IntelliJ: ajustes locales de cada persona ###
+# Se versionan RetoFinalEdD.iml, .idea/modules.xml, .idea/vcs.xml y
+# .idea/.gitignore porque definen la estructura del proyecto y hacen falta
+# para abrirlo. El resto es estado local y no debe viajar entre equipos.
+.idea/misc.xml
+.idea/discord.xml
+.idea/tasks.xml
+.idea/usage.statistics.xml
+.idea/dictionaries/
+.idea/sonarlint/
+.idea/copyright/
+.idea/inspectionProfiles/
+
 ### Build: artefactos generados por build.sh / build-windows.bat ###
 # El JAR y el runtime de jlink pesan ~100 MB y valen solo para la plataforma
 # en la que se construyeron, asi que cada equipo compila el suyo.
