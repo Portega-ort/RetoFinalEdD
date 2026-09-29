@@ -5,6 +5,7 @@ import riftforge.model.Element;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.UIManager;
+import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.EnumMap;
@@ -56,6 +57,7 @@ public final class Theme {
         UIManager.put("Button.background", BTN_SECONDARY);
         UIManager.put("Button.foreground", TEXT);
         UIManager.put("Button.select", new Color(0x2A3145));
+        UIManager.put("Button.disabledText", TEXT_DIM);
         UIManager.put("Label.foreground", TEXT);
         UIManager.put("Label.font", Typeface.body(Font.PLAIN, 14));
         UIManager.put("Panel.background", PANEL);
@@ -64,8 +66,19 @@ public final class Theme {
         UIManager.put("TextArea.caretForeground", TEXT);
     }
 
-    /** Da estilo explícito a un botón para que el texto siempre contraste con el fondo. */
+    /**
+     * Da estilo explícito a un botón para que el texto siempre contraste con el fondo.
+     *
+     * <p>El paso clave es sustituir la delegación del LookAndFeel por la básica: en
+     * Windows el {@code WindowsLookAndFeel} dibuja la cara del botón con los colores
+     * nativos del sistema e ignora {@code setBackground}, así que el boton salia
+     * blanco aunque se le asignara color. Con la delegación básica, que sí respeta la
+     * paleta, el color se ve igual en todos los sistemas, y el resto de la ventana
+     * (barra de título, barras de desplazamiento, diálogos) lo sigue dibujando el
+     * sistema nativo.
+     */
     public static void styleButton(JButton button, Color background, int fontSize) {
+        button.setUI(new BasicButtonUI());
         button.setOpaque(true);
         button.setBackground(background);
         button.setForeground(TEXT);
