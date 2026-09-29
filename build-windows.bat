@@ -8,11 +8,28 @@ rem ============================================================
 setlocal
 cd /d "%~dp0"
 
+where javac >nul 2>&1
+if errorlevel 1 (
+    echo ERROR: no se encuentra javac. Instala un JDK 17 o superior
+    echo y anadelo al PATH, o define JAVA_HOME.
+    exit /b 1
+)
+for %%t in (javac jar jlink jpackage) do (
+    where %%t >nul 2>&1
+    if errorlevel 1 (
+        echo ERROR: falta %%t en el PATH. Se necesita un JDK completo,
+        echo no solo un JRE. Revisa JAVA_HOME.
+        exit /b 1
+    )
+)
+
 echo [1/5] Compilando...
 if exist out rd /s /q out
 mkdir out
 dir /s /b java\src\*.java > sources.txt
-javac -encoding UTF-8 -d out @sources.txt
+rem  --release 17 fija la version del bytecode aunque se compile con un JDK mas
+rem  nuevo, para que el JAR siga funcionando en cualquier JDK 17 o superior.
+javac -encoding UTF-8 --release 17 -d out @sources.txt
 if errorlevel 1 (
     echo Compilacion fallida.
     del sources.txt

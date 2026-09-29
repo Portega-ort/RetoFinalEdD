@@ -5,8 +5,17 @@ cd "$(dirname "$0")"
 rm -rf out dist runtime-image /tmp/rfstage /tmp/rficon
 mkdir -p out dist
 
+for tool in javac jar jlink jpackage; do
+    command -v "$tool" >/dev/null 2>&1 || {
+        echo "ERROR: falta '$tool'. Se necesita un JDK completo 17+ en el PATH." >&2
+        exit 1
+    }
+done
+
 echo "[1/6] Compilando..."
-javac -encoding UTF-8 -d out $(find java/src -name '*.java')
+# --release 17 fija la version del bytecode aunque se compile con un JDK mas
+# nuevo, para que el JAR siga funcionando en cualquier JDK 17 o superior.
+javac -encoding UTF-8 --release 17 -d out $(find java/src -name '*.java')
 
 echo "[2/6] Empaquetando JAR autocontenido..."
 mkdir -p /tmp/rfstage
